@@ -36,16 +36,3 @@ class ViewTabBar<Events: EventsType>: UITabBarController {
         self.viewControllers = self.tabs.map { $0.controller }
     }
 }
-
-class ViewTab {
-    
-    let controller: UIViewController
-    let item: UITabBarItem
-    
-    init(title: String, controller: UIViewController, image: UIImage? = nil, selectedImage: UIImage? = nil) {
-        controller.title = title
-        
-        self.controller = controller        
-        self.item = UITabBarItem(title: title, image: image, selectedImage: selectedImage)
-    }
-}

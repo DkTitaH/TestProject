@@ -10,10 +10,13 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class View<ViewModelType, Configurator, Events: EventsType>: UIViewController
-    where ViewModelType: ViewModel<Configurator, Events>, Configurator: ConfiguratorType
+class View<ViewModelType, Configurator, InPutEvents: EventsType, OutPutEvents: EventsType>: UIViewController
+    where ViewModelType: ViewModel<Configurator, InPutEvents, OutPutEvents>, Configurator: ConfiguratorType
 {
+    
     private let viewModel: ViewModelType
+    
+    let disposeBag = DisposeBag()
     
     init(viewModel: ViewModelType, bundle: Bundle? = nil) {
         self.viewModel = viewModel
@@ -28,16 +31,16 @@ class View<ViewModelType, Configurator, Events: EventsType>: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.prepareBindings(viewModel: self.viewModel)
+        self.fill(viewModel: self.viewModel)
     }
     
-    open func prepareBindings(viewModel: ViewModelType) {
+    open func fill(viewModel: ViewModelType) {
         
     }
 }
 
-class TableView<ViewModelType, Cell: UITableViewCell, Configurator, Events: EventsType>: UITableViewController
-    where ViewModelType: ViewModel<Configurator, Events>, Configurator: ConfiguratorType
+class TableView<ViewModelType, Cell: UITableViewCell, Configurator, InPutEvents: EventsType, OutPutEvents: EventsType>: UITableViewController
+    where ViewModelType: ViewModel<Configurator, InPutEvents, OutPutEvents>, Configurator: ConfiguratorType
 {
     private let viewModel: ViewModelType
     

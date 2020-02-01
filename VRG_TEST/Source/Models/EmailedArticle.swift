@@ -21,6 +21,10 @@ struct EmailedModel: Codable {
         case results
         case status
     }
+    
+    static var empty: EmailedModel {
+        return .init(copyright: "", numResults: 0, results: [], status: "")
+    }
 }
 
 struct EmailedArticleModel: Codable {

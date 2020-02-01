@@ -9,12 +9,18 @@
 import RxSwift
 import RxCocoa
 
-class ViewModel<Configurator: ConfiguratorType, Events: EventsType> {
+class ViewModel<Configurator: ConfiguratorType, InputEvents: EventsType, OutPutEvents: EventsType> {
     
-    let eventHandler = PublishSubject<Events>()
+    var events: Observable<InputEvents> {
+        return self.internalEventHandler.asObservable()
+    }
+    
+    let eventHandler = PublishSubject<OutPutEvents>()
+    
+    let internalEventHandler = PublishSubject<InputEvents>()
     let disposeBag = DisposeBag()
-    
+
     init(configurator: Configurator) {
-        
+
     }
 }
