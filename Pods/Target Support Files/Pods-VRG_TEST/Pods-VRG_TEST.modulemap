@@ -1,0 +1,6 @@
+framework module Pods_VRG_TEST {
+  umbrella header "Pods-VRG_TEST-umbrella.h"
+
+  export *
+  module * { export * }
+}
