@@ -60,7 +60,7 @@ class MostViewedViewModel: ViewModel<MostViewedViewModelConfigurator, MostViewed
                 }
             }
         case let .showViewedArticleDetailView(model):
-            print(model)
+            break
             //            self.internalEventHandler.onNext(<#T##element: MostEmailedViewInputEvent##MostEmailedViewInputEvent#>)
         }
     }

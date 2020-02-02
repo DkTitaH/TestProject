@@ -13,13 +13,9 @@ import RxCocoa
 class FlowController<Events: EventsType>: UINavigationController, UINavigationControllerDelegate {
     
     let eventHandler = PublishSubject<Events>()
-    let dispiseBag = DisposeBag()
+    let disposeBag = DisposeBag()
     
-    private weak var rootViewController: UIViewController?
-    
-    init(controller: UIViewController) {
-        self.rootViewController = controller
-        
+    init() {
         super.init(nibName: nil, bundle: nil)
         
         self.delegate = self
@@ -36,8 +32,8 @@ class FlowController<Events: EventsType>: UINavigationController, UINavigationCo
         self.start()
     }
     
-    private func start() {
-        self.rootViewController.do(self.push(viewController:))
+    open func start() {
+        
     }
 }
 

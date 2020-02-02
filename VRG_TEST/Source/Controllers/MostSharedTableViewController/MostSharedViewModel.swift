@@ -60,7 +60,7 @@ class MostSharedViewModel: ViewModel<MostSharedViewModelConfigurator, MostShared
                     }
                 }
             case let .showSharedArticleDetailView(model):
-                print(model)
+                break
                 //            self.internalEventHandler.onNext(<#T##element: MostEmailedViewInputEvent##MostEmailedViewInputEvent#>)
             }
         }

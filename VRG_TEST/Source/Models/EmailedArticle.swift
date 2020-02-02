@@ -36,7 +36,7 @@ struct EmailedArticleModel: Codable {
 //    let column: String
 //    let countType: String
 //    let desFacet: [String]
-//    let emailCount: Int
+    let emailCount: Int
 //    let etaId: Int
 //    let geoFacet: [String]
     let id: Int
@@ -63,7 +63,7 @@ struct EmailedArticleModel: Codable {
 //        case column
 //        case countType = "count_type"
 //        case desFacet = "des_facet"
-//        case emailCount = "email_count"
+        case emailCount = "email_count"
 //        case etaId = "eta_id"
 //        case geoFacet = "geo_facet"
         case id

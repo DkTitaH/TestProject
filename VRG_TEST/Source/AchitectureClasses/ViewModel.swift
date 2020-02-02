@@ -11,6 +11,10 @@ import RxCocoa
 
 class ViewModel<Configurator: ConfiguratorType, Events: EventsType> {
     
+    var events: Observable<Events> {
+        return self.eventHandler.asObservable()
+    }
+    
     let eventHandler = PublishSubject<Events>()
     let disposeBag = DisposeBag()
 
