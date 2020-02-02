@@ -19,9 +19,11 @@ class AppFlowController: FlowController<AppFlowControllerEvents> {
     private weak var tabBarView: UITabBarController?
     
     let requestService: APIService
+    let storageService: StorageService
     
-    init(requestService: APIService) {
+    init(requestService: APIService, storageService: StorageService) {
         self.requestService = requestService
+        self.storageService = storageService
         
         super.init()
     }
@@ -74,7 +76,7 @@ class AppFlowController: FlowController<AppFlowControllerEvents> {
     private func handle(event: MostEmailedViewEvents) {
         switch event {
         case let .showEmailedArticleDetailView(model):
-            print("emailed article model: \(model))")
+            self.showArticleDetailView(model: model)
         default:
             break
         }
@@ -97,7 +99,7 @@ class AppFlowController: FlowController<AppFlowControllerEvents> {
     private func handle(event: MostViewedViewEvents) {
         switch event {
         case let .showViewedArticleDetailView(model):
-            print("viewed article model: \(model))")
+            self.showArticleDetailView(model: model)
         default:
             break
         }
@@ -120,6 +122,7 @@ class AppFlowController: FlowController<AppFlowControllerEvents> {
     private func handle(event: MostSharedViewEvents) {
         switch event {
         case let .showSharedArticleDetailView(model):
+            self.showArticleDetailView(model: model)
             print("shared article model: \(model))")
         default:
             break
@@ -127,11 +130,33 @@ class AppFlowController: FlowController<AppFlowControllerEvents> {
     }
     
     private func favoritesView() -> UIViewController {
-        let configurator = FavoritesViewModelConfigurator(requestService: self.requestService)
+        let configurator = FavoritesViewModelConfigurator(storageService: self.storageService)
         let viewModel = FavoritesViewModel(configurator: configurator)
         
+        viewModel
+            .events
+            .bind { event in
+                self.handle(event:  event)
+            }.disposed(by: self.disposeBag)
         
         return FavoritesView(viewModel: viewModel)
+    }
+    
+    private func handle(event: FavoritesViewEvents) {
+        switch event {
+        case .updateModel:
+            break
+        case let .showArticleDetailView(model):
+            self.showArticleDetailView(model: model)
+        }
+    }
+    
+    private func showArticleDetailView(model: ArticleModelType) {
+        let configurator = ArticleDetailViewModelConfigurator(model: model, storageService: self.storageService)
+        let viewModel = ArticleDetailViewModel(configurator: configurator)
+        let view = ArticleDetailView(viewModel: viewModel)
+    
+        self.push(viewController: view)
     }
 }
 

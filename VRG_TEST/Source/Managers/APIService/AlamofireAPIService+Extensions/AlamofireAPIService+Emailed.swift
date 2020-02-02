@@ -12,7 +12,7 @@ extension AlamofireAPIService {
     
     func getEmailedArticles(completion: @escaping (Result<EmailedModel, APIServiceError>) -> ()) {
         self.task = self.requestData(
-            url: .init(api: .value, type: .emailed, period: .day),
+            url: .init(api: .value, type: .emailed, period: .month),
             method: .get
         ) { result in
             switch result {

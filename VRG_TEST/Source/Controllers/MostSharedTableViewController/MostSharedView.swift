@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class MostSharedView: View<MostSharedViewModel, MostSharedViewModelConfigurator, MostSharedViewEvents>, UITableViewDataSource {
 
@@ -42,7 +44,29 @@ class MostSharedView: View<MostSharedViewModel, MostSharedViewModelConfigurator,
                 
             }.disposed(by: self.disposeBag)
         
+        self.configureRefresheControl(viewModel: viewModel)
+        
         viewModel.eventHandler.onNext(.getSharedModel)
+    }
+    
+    func configureRefresheControl(viewModel: MostSharedViewModel) {
+        let refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl
+            .rx
+            .controlEvent(.valueChanged)
+            .observeOn(MainScheduler.asyncInstance)
+            .bind { [weak viewModel, weak refreshControl] in
+                viewModel?.eventHandler.onNext(.getSharedModel)
+                
+                DispatchQueue.main.async {
+                    self.tableView?.reloadData()
+                    refreshControl?.endRefreshing()
+                }
+            }
+            .disposed(by: self.disposeBag)
+        
+        self.tableView?.addSubview(refreshControl)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -46,6 +46,8 @@
 		3FACA12123E7366000AC24A8 /* ArticleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FACA11F23E7366000AC24A8 /* ArticleDetailView.swift */; };
 		3FACA12223E7366000AC24A8 /* ArticleDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FACA12023E7366000AC24A8 /* ArticleDetailView.xib */; };
 		3FACA12423E736D400AC24A8 /* ArticleDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FACA12323E736D400AC24A8 /* ArticleDetailViewModel.swift */; };
+		3FACA12623E73C6E00AC24A8 /* ArticleModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FACA12523E73C6E00AC24A8 /* ArticleModelType.swift */; };
+		3FACA12A23E7598900AC24A8 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FACA12923E7598900AC24A8 /* StorageService.swift */; };
 		87AC8A12FA04EC5531E0E405 /* Pods_VRG_TEST.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5369FF308A9F6598D56134A8 /* Pods_VRG_TEST.framework */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +93,8 @@
 		3FACA11F23E7366000AC24A8 /* ArticleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDetailView.swift; sourceTree = "<group>"; };
 		3FACA12023E7366000AC24A8 /* ArticleDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArticleDetailView.xib; sourceTree = "<group>"; };
 		3FACA12323E736D400AC24A8 /* ArticleDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDetailViewModel.swift; sourceTree = "<group>"; };
+		3FACA12523E73C6E00AC24A8 /* ArticleModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleModelType.swift; sourceTree = "<group>"; };
+		3FACA12923E7598900AC24A8 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		5369FF308A9F6598D56134A8 /* Pods_VRG_TEST.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VRG_TEST.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		55AC18989EA8C948C64331B6 /* Pods-VRG_TEST.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VRG_TEST.release.xcconfig"; path = "Target Support Files/Pods-VRG_TEST/Pods-VRG_TEST.release.xcconfig"; sourceTree = "<group>"; };
 		654B96227C75D41FFDC9600D /* Pods-VRG_TEST.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VRG_TEST.debug.xcconfig"; path = "Target Support Files/Pods-VRG_TEST/Pods-VRG_TEST.debug.xcconfig"; sourceTree = "<group>"; };
@@ -150,8 +154,8 @@
 		3F1DB55923E5776700B0A8A7 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				3FACA12723E7596D00AC24A8 /* Managers */,
 				3F1DB58C23E5A8E000B0A8A7 /* Models */,
-				3F1DB58923E591C200B0A8A7 /* APIService */,
 				3F1DB56123E57C0400B0A8A7 /* Types */,
 				3F1DB56023E57BFD00B0A8A7 /* Protocols */,
 				3F1DB55F23E57BF700B0A8A7 /* Extensions */,
@@ -285,6 +289,7 @@
 				3F1DB58D23E5A90000B0A8A7 /* EmailedArticle.swift */,
 				3F1DB59C23E601D700B0A8A7 /* SharedArticle.swift */,
 				3F1DB59E23E601E100B0A8A7 /* ViewedArticle.swift */,
+				3FACA12523E73C6E00AC24A8 /* ArticleModelType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -307,6 +312,23 @@
 				3FACA12323E736D400AC24A8 /* ArticleDetailViewModel.swift */,
 			);
 			path = ArticleDetailViewController;
+			sourceTree = "<group>";
+		};
+		3FACA12723E7596D00AC24A8 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				3FACA12823E7597700AC24A8 /* StorageService */,
+				3F1DB58923E591C200B0A8A7 /* APIService */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		3FACA12823E7597700AC24A8 /* StorageService */ = {
+			isa = PBXGroup;
+			children = (
+				3FACA12923E7598900AC24A8 /* StorageService.swift */,
+			);
+			path = StorageService;
 			sourceTree = "<group>";
 		};
 		4F5FDEA2AD65DDDBC9353C06 /* Pods */ = {
@@ -439,6 +461,7 @@
 			files = (
 				3F1DB5B723E60F5E00B0A8A7 /* FavoritesViewModel.swift in Sources */,
 				3F1DB56523E57F1900B0A8A7 /* AppFlowController.swift in Sources */,
+				3FACA12623E73C6E00AC24A8 /* ArticleModelType.swift in Sources */,
 				3F1DB5A523E60C6700B0A8A7 /* MostEmailedVIewModel.swift in Sources */,
 				3F1DB59023E5F10D00B0A8A7 /* NetworkTask.swift in Sources */,
 				3F1DB59B23E5F8E500B0A8A7 /* AlamofireAPIService+Viewed.swift in Sources */,
@@ -465,6 +488,7 @@
 				3F1DB59F23E601E100B0A8A7 /* ViewedArticle.swift in Sources */,
 				3FACA12423E736D400AC24A8 /* ArticleDetailViewModel.swift in Sources */,
 				3F1DB5B523E60F3D00B0A8A7 /* MostViewedViewModel.swift in Sources */,
+				3FACA12A23E7598900AC24A8 /* StorageService.swift in Sources */,
 				3F1DB58E23E5A90000B0A8A7 /* EmailedArticle.swift in Sources */,
 				3F1DB56B23E5819E00B0A8A7 /* ViewModel.swift in Sources */,
 				3F1DB57923E5887D00B0A8A7 /* ViewTabBar.swift in Sources */,

@@ -44,8 +44,31 @@ class MostEmailedView: View<MostEmailedViewModel, MostEmailedViewModelConfigurat
                 
             }.disposed(by: self.disposeBag)
         
+        self.configureRefresheControl(viewModel: viewModel)
+        
         viewModel.eventHandler.onNext(.getEmailedModel)
     }
+    
+    func configureRefresheControl(viewModel: MostEmailedViewModel) {
+        let refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl
+            .rx
+            .controlEvent(.valueChanged)
+            .observeOn(MainScheduler.asyncInstance)
+            .bind { [weak viewModel, weak refreshControl] in
+                viewModel?.eventHandler.onNext(.getEmailedModel)
+                
+                DispatchQueue.main.async {
+                    self.tableView?.reloadData()
+                    refreshControl?.endRefreshing()
+                }
+            }
+            .disposed(by: self.disposeBag)
+        
+        self.tableView?.addSubview(refreshControl)
+    }
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.model?.results.count ?? 0

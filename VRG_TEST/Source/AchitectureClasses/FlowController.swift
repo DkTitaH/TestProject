@@ -40,6 +40,7 @@ class FlowController<Events: EventsType>: UINavigationController, UINavigationCo
 extension FlowController {
     
     func push(viewController: UIViewController) {
-        self.pushViewController(viewController, animated: false)
+        self.pushViewController(viewController, animated: true)
+        viewController.navigationController?.isNavigationBarHidden = false
     }
 }

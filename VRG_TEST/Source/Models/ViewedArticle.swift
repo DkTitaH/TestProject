@@ -27,14 +27,18 @@ struct ViewedModel: Codable {
     }
 }
 
-struct ViewedArticleModel: Codable {
+struct ViewedArticleModel: ArticleModelType {
     
-    //    let abstract: String
-    //    let adxKeywords: String
+    var count: Int {
+        return self.views
+    }
+    
+    let abstract: String
+    let adxKeywords: String
     //    let assetId: Int
     //    let byline: String
     //    let column: String
-    //    let countType: String
+    let countType: String = "Viewed"
     //    let desFacet: [String]
     //    let emailCount: Int
     //    let etaId: Int
@@ -55,12 +59,12 @@ struct ViewedArticleModel: Codable {
     let views: Int
     
     enum CodingKeys: String, CodingKey {
-        //        case abstract
-        //        case adxKeywords = "adx_keywords"
+        case abstract
+        case adxKeywords = "adx_keywords"
         //        case assetId = "asset_id"
         //        case byline
         //        case column
-        //        case countType = "count_type"
+        case countType = "count_type"
         //        case desFacet = "des_facet"
         //        case emailCount = "email_count"
         //        case etaId = "eta_id"

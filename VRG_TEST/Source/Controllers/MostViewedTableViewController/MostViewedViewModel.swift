@@ -35,17 +35,15 @@ class MostViewedViewModel: ViewModel<MostViewedViewModelConfigurator, MostViewed
         self.requestService = configurator.requestService
         
         super.init(configurator: configurator)
-        
-        self.preprareBindings()
     }
     
-    func preprareBindings() {
+    override func preprareBindings(disposeBag: DisposeBag) {
         self.eventHandler
             .map { $0 }
             .bind { [weak self] in
                 self?.handle(events: $0)
             }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
     }
     
     override func handle(events: MostViewedViewEvents) {

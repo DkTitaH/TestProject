@@ -20,9 +20,14 @@ class ViewModel<Configurator: ConfiguratorType, Events: EventsType> {
 
     init(configurator: Configurator) {
 
+        self.preprareBindings(disposeBag: self.disposeBag)
     }
     
     open func handle(events: Events) {
+        
+    }
+    
+    open func preprareBindings(disposeBag: DisposeBag) {
         
     }
 }

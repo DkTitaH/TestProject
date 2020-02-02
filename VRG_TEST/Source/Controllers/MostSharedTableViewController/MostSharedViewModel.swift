@@ -34,18 +34,16 @@ class MostSharedViewModel: ViewModel<MostSharedViewModelConfigurator, MostShared
         override init(configurator: MostSharedViewModelConfigurator) {
             self.requestService = configurator.requestService
             
-            super.init(configurator: configurator)
-            
-            self.preprareBindings()
+            super.init(configurator: configurator)            
         }
         
-        func preprareBindings() {
+        override func preprareBindings(disposeBag: DisposeBag) {
             self.eventHandler
                 .map { $0 }
                 .bind { [weak self] in
                     self?.handle(events: $0)
                 }
-                .disposed(by: self.disposeBag)
+                .disposed(by: disposeBag)
         }
         
         override func handle(events: MostSharedViewEvents) {
