@@ -8,6 +8,8 @@
 //
 
 import Foundation
+import RxCocoa
+import RxSwift
 
 class MostViewedViewModelConfigurator: ConfiguratorType {
     
@@ -18,14 +20,48 @@ class MostViewedViewModelConfigurator: ConfiguratorType {
     }
 }
 
-enum MostViewedViewInputEvent: EventsType {
-    case emailedModel(EmailedModel)
+enum MostViewedViewEvents: EventsType {
+    case getViewedModel
+    case showViewedArticleDetailView(ViewedArticleModel)
 }
 
-enum MostViewedViewOutPutEvent: EventsType {
-    case getEmailedModel
-}
-
-class MostViewedViewModel: ViewModel<MostViewedViewModelConfigurator, MostViewedViewInputEvent, MostViewedViewOutPutEvent> {
+class MostViewedViewModel: ViewModel<MostViewedViewModelConfigurator, MostViewedViewEvents> {
     
+    private let requestService: APIService
+    
+    let viewedModel = BehaviorRelay<ViewedModel>(value: .empty)
+    
+    override init(configurator: MostViewedViewModelConfigurator) {
+        self.requestService = configurator.requestService
+        
+        super.init(configurator: configurator)
+        
+        self.preprareBindings()
+    }
+    
+    func preprareBindings() {
+        self.eventHandler
+            .map { $0 }
+            .bind { [weak self] in
+                self?.handle(events: $0)
+            }
+            .disposed(by: self.disposeBag)
+    }
+    
+    override func handle(events: MostViewedViewEvents) {
+        switch events {
+        case .getViewedModel:
+            self.requestService.getViewedArticles { result in
+                switch result {
+                case let .success(model):
+                    self.viewedModel.accept(model)
+                case let .failure(error):
+                    print(error)
+                }
+            }
+        case let .showViewedArticleDetailView(model):
+            print(model)
+            //            self.internalEventHandler.onNext(<#T##element: MostEmailedViewInputEvent##MostEmailedViewInputEvent#>)
+        }
+    }
 }

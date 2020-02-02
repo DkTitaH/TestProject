@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class MostEmailedView: View<MostEmailedViewModel, MostEmailedViewModelConfigurator, MostEmailedViewInputEvent, MostEmailedViewOutPutEvent>, UITableViewDataSource {
+class MostEmailedView: View<MostEmailedViewModel, MostEmailedViewModelConfigurator, MostEmailedViewEvents>, UITableViewDataSource {
     
     @IBOutlet var tableView: UITableView?
     

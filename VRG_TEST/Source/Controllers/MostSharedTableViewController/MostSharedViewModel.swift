@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
 class MostSharedViewModelConfigurator: ConfiguratorType {
  
@@ -17,15 +19,50 @@ class MostSharedViewModelConfigurator: ConfiguratorType {
     }
 }
 
-enum MostSharedViewInputEvent: EventsType {
-    case emailedModel(EmailedModel)
-}
-
-enum MostSharedViewOutPutEvent: EventsType {
-    case getEmailedModel
+enum MostSharedViewEvents: EventsType {
+    case getSharedModel
+    case showSharedArticleDetailView(SharedArticleModel)
 }
 
 
-class MostSharedViewModel: ViewModel<MostSharedViewModelConfigurator, MostSharedViewInputEvent, MostSharedViewOutPutEvent> {
-    
+class MostSharedViewModel: ViewModel<MostSharedViewModelConfigurator, MostSharedViewEvents> {
+        
+        private let requestService: APIService
+        
+        let sharedModel = BehaviorRelay<SharedModel>(value: .empty)
+        
+        override init(configurator: MostSharedViewModelConfigurator) {
+            self.requestService = configurator.requestService
+            
+            super.init(configurator: configurator)
+            
+            self.preprareBindings()
+        }
+        
+        func preprareBindings() {
+            self.eventHandler
+                .map { $0 }
+                .bind { [weak self] in
+                    self?.handle(events: $0)
+                }
+                .disposed(by: self.disposeBag)
+        }
+        
+        override func handle(events: MostSharedViewEvents) {
+            switch events {
+            case .getSharedModel:
+                self.requestService.getSharedArticles { result in
+                    switch result {
+                    case let .success(model):
+                        self.sharedModel.accept(model)
+                    case let .failure(error):
+                        print(error)
+                    }
+                }
+            case let .showSharedArticleDetailView(model):
+                print(model)
+                //            self.internalEventHandler.onNext(<#T##element: MostEmailedViewInputEvent##MostEmailedViewInputEvent#>)
+            }
+        }
 }
+

@@ -21,14 +21,6 @@ enum FavoritesViewEvents: EventsType {
     
 }
 
-enum FavoritesViewInputEvent: EventsType {
-    case emailedModel(EmailedModel)
-}
-
-enum FavoritesViewOutPutEvent: EventsType {
-    case getEmailedModel
-}
-
-class FavoritesViewModel: ViewModel<FavoritesViewModelConfigurator, FavoritesViewInputEvent, FavoritesViewOutPutEvent> {
+class FavoritesViewModel: ViewModel<FavoritesViewModelConfigurator, FavoritesViewEvents> {
     
 }

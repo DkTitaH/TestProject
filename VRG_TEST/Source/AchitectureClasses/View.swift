@@ -10,8 +10,8 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class View<ViewModelType, Configurator, InPutEvents: EventsType, OutPutEvents: EventsType>: UIViewController
-    where ViewModelType: ViewModel<Configurator, InPutEvents, OutPutEvents>, Configurator: ConfiguratorType
+class View<ViewModelType, Configurator, Events: EventsType>: UIViewController
+    where ViewModelType: ViewModel<Configurator, Events>, Configurator: ConfiguratorType
 {
     
     private let viewModel: ViewModelType
@@ -39,8 +39,8 @@ class View<ViewModelType, Configurator, InPutEvents: EventsType, OutPutEvents: E
     }
 }
 
-class TableView<ViewModelType, Cell: UITableViewCell, Configurator, InPutEvents: EventsType, OutPutEvents: EventsType>: UITableViewController
-    where ViewModelType: ViewModel<Configurator, InPutEvents, OutPutEvents>, Configurator: ConfiguratorType
+class TableView<ViewModelType, Cell: UITableViewCell, Configurator, Events: EventsType>: UITableViewController
+    where ViewModelType: ViewModel<Configurator, Events>, Configurator: ConfiguratorType
 {
     private let viewModel: ViewModelType
     

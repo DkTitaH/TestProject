@@ -21,6 +21,10 @@ struct SharedModel: Codable {
         case results
         case status
     }
+    
+    static var empty: SharedModel {
+        return .init(copyright: "", numResults: 0, results: [], status: "")
+    }
 }
 
 struct SharedArticleModel: Codable {

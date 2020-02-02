@@ -21,6 +21,10 @@ struct ViewedModel: Codable {
         case results
         case status
     }
+    
+    static var empty: ViewedModel {
+        return .init(copyright: "", numResults: 0, results: [], status: "")
+    }
 }
 
 struct ViewedArticleModel: Codable {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FavoritesView: View<FavoritesViewModel, FavoritesViewModelConfigurator, FavoritesViewInputEvent, FavoritesViewOutPutEvent> {
+class FavoritesView: View<FavoritesViewModel, FavoritesViewModelConfigurator, FavoritesViewEvents> {
 
 //    override func viewDidLoad() {
 //        super.viewDidLoad()

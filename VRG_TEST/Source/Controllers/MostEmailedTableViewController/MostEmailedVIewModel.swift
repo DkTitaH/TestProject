@@ -19,16 +19,12 @@ class MostEmailedViewModelConfigurator: ConfiguratorType {
     }
 }
 
-enum MostEmailedViewInputEvent: EventsType {
-    case emailedModel(EmailedModel)
-}
-
-enum MostEmailedViewOutPutEvent: EventsType {
+enum MostEmailedViewEvents: EventsType {
     case getEmailedModel
     case showEmailedArticleDetailView(EmailedArticleModel)
 }
 
-class MostEmailedViewModel: ViewModel<MostEmailedViewModelConfigurator, MostEmailedViewInputEvent, MostEmailedViewOutPutEvent> {
+class MostEmailedViewModel: ViewModel<MostEmailedViewModelConfigurator, MostEmailedViewEvents> {
     
     private let requestService: APIService
     
@@ -51,7 +47,7 @@ class MostEmailedViewModel: ViewModel<MostEmailedViewModelConfigurator, MostEmai
             .disposed(by: self.disposeBag)
     }
     
-    private func handle(events: MostEmailedViewOutPutEvent) {
+    override func handle(events: MostEmailedViewEvents) {
         switch events {
         case .getEmailedModel:
             self.requestService.getEmailedArticles { result in
