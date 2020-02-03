@@ -23,11 +23,12 @@ enum Period: String {
     case month = "30"
 }
 
-enum ObjectType: String, RawRepresentable {
+enum ArticleType: String, RawRepresentable {
 
     case emailed = "emailed/"
     case shared = "shared/"
     case viewed = "viewed/"
+    case `default`
 }
 
 enum ThrdService: String {
@@ -41,7 +42,7 @@ class APIUrl {
     
     init(
         api: API,
-        type: ObjectType,
+        type: ArticleType,
         period: Period,
         thrdService: ThrdService? = nil,
         key: Authorized = .key
@@ -59,7 +60,7 @@ class APIUrl {
     }
 }
 
-class AlamofireAPIService: AlamofireAPIServiceType, APIService {
+class AlamofireAPIService: AlamofireAPIServiceType, APIServiceType {
     
     var task: NetworkTask? {
         didSet {

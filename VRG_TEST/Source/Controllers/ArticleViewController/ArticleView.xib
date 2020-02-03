@@ -10,9 +10,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MostSharedView" customModule="VRG_TEST" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ArticleView" customModule="VRG_TEST" customModuleProvider="target">
             <connections>
-                <outlet property="tableView" destination="ezd-Kb-xhf" id="5Vh-ol-LqJ"/>
+                <outlet property="tableView" destination="kqq-eY-iC9" id="Std-IM-Rct"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -21,17 +21,17 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ezd-Kb-xhf">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kqq-eY-iC9">
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="ezd-Kb-xhf" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="3Xk-10-wGY"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ezd-Kb-xhf" secondAttribute="bottom" id="8bE-Pw-vIE"/>
-                <constraint firstItem="ezd-Kb-xhf" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="B79-GU-Kkq"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ezd-Kb-xhf" secondAttribute="trailing" id="lmw-cf-VB1"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="kqq-eY-iC9" secondAttribute="trailing" id="4Et-kt-tBa"/>
+                <constraint firstItem="kqq-eY-iC9" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="KsQ-JW-MN2"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="kqq-eY-iC9" secondAttribute="bottom" id="MBO-Et-SxZ"/>
+                <constraint firstItem="kqq-eY-iC9" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="TAd-X8-4wX"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>

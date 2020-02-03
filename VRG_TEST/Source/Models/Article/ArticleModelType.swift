@@ -17,16 +17,5 @@ protocol ArticleModelType: Codable {
     var source: String { get }
     var title: String { get }
     var publishedDate: String { get }
-    var countType: String { get }    
-}
-
-struct DefaultArticleModel: ArticleModelType {
-    let adxKeywords: String
-    let abstract: String
-    let id: Int
-    let count: Int
-    let source: String
-    let title: String
-    let publishedDate: String
-    let countType: String
+    var countType: String { get }
 }

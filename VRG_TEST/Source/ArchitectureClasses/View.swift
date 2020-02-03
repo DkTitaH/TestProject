@@ -18,10 +18,10 @@ class View<ViewModelType, Configurator, Events: EventsType>: UIViewController
     
     let disposeBag = DisposeBag()
     
-    init(viewModel: ViewModelType, bundle: Bundle? = nil) {
+    init(viewModel: ViewModelType, nibName: String? = nil, bundle: Bundle? = nil) {
         self.viewModel = viewModel
         
-        super.init(nibName: "\(type(of: self))", bundle: bundle)
+        super.init(nibName: nibName, bundle: bundle)
     }
     
     required init?(coder aDecoder: NSCoder) {

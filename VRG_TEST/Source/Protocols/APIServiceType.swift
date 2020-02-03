@@ -17,16 +17,8 @@ enum APIServiceError: Error {
     case invalidStatusCode(Int)
 }
 
-protocol AlamofireAPIServiceType {
+protocol APIServiceType {
     
-    func requestData(url: APIUrl, method: HTTPMethod, headers: HTTPHeaders?, completion: @escaping (Result<Data, APIServiceError>) -> Void) -> NetworkTask?
-}
-
-protocol APIService {
-    
-    func getEmailedArticles(completion: @escaping (Result<EmailedModel, APIServiceError>) -> ())
-    
-    func getSharedArticles(completion: @escaping (Result<SharedModel, APIServiceError>) -> ())
-    
-    func getViewedArticles(completion: @escaping (Result<ViewedModel, APIServiceError>) -> ())
+    func getArticles<ArticlesModel: ArticlesModelType>(completion: @escaping (Result<ArticlesModel, APIServiceError>) -> ()
+    ) 
 }
