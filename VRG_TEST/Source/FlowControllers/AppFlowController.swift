@@ -136,7 +136,7 @@ class AppFlowController: FlowController<AppFlowControllerEvents> {
         let configurator = ArticleDetailViewModelConfigurator(model: model, storageService: self.storageService)
         let viewModel = ArticleDetailViewModel(configurator: configurator)
         let view = ArticleDetailView(viewModel: viewModel)
-    
+        
         self.push(viewController: view)
     }
 }

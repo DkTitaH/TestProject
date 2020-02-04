@@ -33,6 +33,10 @@ class ViewTabBar<Events: EventsType>: UITabBarController {
     }
     
     private func start() {
-        self.viewControllers = self.tabs.map { $0.controller }
+        self.viewControllers = self.tabs.map {
+            $0.controller.navigationController?.isNavigationBarHidden = true
+            
+            return $0.controller
+        }
     }
 }

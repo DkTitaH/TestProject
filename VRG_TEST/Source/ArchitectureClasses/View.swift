@@ -27,6 +27,22 @@ class View<ViewModelType, Configurator, Events: EventsType>: UIViewController
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if self.isMovingToParent {
+            self.navigationController?.isNavigationBarHidden = false
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if self.isMovingFromParent {
+            self.navigationController?.isNavigationBarHidden = true
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

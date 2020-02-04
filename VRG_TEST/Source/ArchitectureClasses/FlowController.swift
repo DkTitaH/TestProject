@@ -21,7 +21,7 @@ class FlowController<Events: EventsType>: UINavigationController, UINavigationCo
         self.delegate = self
         self.isNavigationBarHidden = true
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -41,6 +41,5 @@ extension FlowController {
     
     func push(viewController: UIViewController) {
         self.pushViewController(viewController, animated: true)
-        viewController.navigationController?.isNavigationBarHidden = false
     }
 }
