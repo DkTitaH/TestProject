@@ -37,7 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func appFlow() -> UIViewController {
-        let requestService = AlamofireAPIService(decoder: .init())
+        let parser = JSONParser(decoder: .init())
+        let requestService = AlamofireAPIService(parser: parser)
         let storageService = CoreDataStorageService(persistentContainer: self.persistentContainer)
         
         return AppFlowController(requestService: requestService, storageService: storageService)

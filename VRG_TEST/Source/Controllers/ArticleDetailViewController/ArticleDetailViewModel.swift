@@ -22,7 +22,9 @@ struct ArticleDetailViewModelConfigurator: ConfiguratorType {
 }
 
 enum ArticleDetailViewEvents: EventsType {
+    
     case addToFavorites
+    case deleteFromeFavorites
 }
 
 class ArticleDetailViewModel: ViewModel<ArticleDetailViewModelConfigurator, ArticleDetailViewEvents> {
@@ -49,6 +51,8 @@ class ArticleDetailViewModel: ViewModel<ArticleDetailViewModelConfigurator, Arti
         switch events {
         case .addToFavorites:
             self.storageService.save(model: self.model)
+        case .deleteFromeFavorites:
+            self.storageService.deleteArticle(by: self.model.id)
         }
     }
 }

@@ -23,6 +23,7 @@ enum FavoritesViewEvents: EventsType {
     
     case updateModel
     case showArticleDetailView(ArticleModelType)
+    case deleteAll
 }
 
 class FavoritesViewModel: ViewModel<FavoritesViewModelConfigurator, FavoritesViewEvents> {
@@ -49,9 +50,17 @@ class FavoritesViewModel: ViewModel<FavoritesViewModelConfigurator, FavoritesVie
     override func handle(events: FavoritesViewEvents) {
         switch events {
         case .updateModel:
-            self.model.accept(self.storageService.fetch())
+            self.updateModel()
         case .showArticleDetailView(_):
             break
+        case .deleteAll:
+            if self.storageService.deleteAllArticles() {
+                self.updateModel()
+            }
         }
+    }
+    
+    private func updateModel() {
+        self.model.accept(self.storageService.fetch())
     }
 }

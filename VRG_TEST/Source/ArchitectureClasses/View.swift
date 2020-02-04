@@ -14,9 +14,8 @@ class View<ViewModelType, Configurator, Events: EventsType>: UIViewController
     where ViewModelType: ViewModel<Configurator, Events>, Configurator: ConfiguratorType
 {
     
-    private let viewModel: ViewModelType
-    
-    let disposeBag = DisposeBag()
+    private let viewModel: ViewModelType    
+    private let disposeBag = DisposeBag()
     
     init(viewModel: ViewModelType, nibName: String? = nil, bundle: Bundle? = nil) {
         self.viewModel = viewModel
@@ -31,10 +30,10 @@ class View<ViewModelType, Configurator, Events: EventsType>: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.fill(viewModel: self.viewModel)
+        self.fill(viewModel: self.viewModel, disposeBag: self.disposeBag)
     }
     
-    open func fill(viewModel: ViewModelType) {
+    open func fill(viewModel: ViewModelType, disposeBag: DisposeBag) {
         
     }
 }

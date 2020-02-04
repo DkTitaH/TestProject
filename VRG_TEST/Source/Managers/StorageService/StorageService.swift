@@ -13,6 +13,7 @@ protocol StorageService {
     
     func save(model: ArticleModelType)
     func fetch() -> [ArticleModelType]
+    func deleteArticle(by id: Int)
     func deleteAllArticles() -> Bool
 }
 
@@ -48,6 +49,10 @@ class CoreDataStorageService: StorageService {
             .compactMap(self.articleModel)
     }
     
+    func deleteArticle(by id: Int) {
+        self.delete(entity: .article, predicateFilter: "id == %@", value: id)
+    }
+    
     func deleteAllArticles() -> Bool {
         return self.delete(entity: .article)
     }
@@ -73,13 +78,27 @@ class CoreDataStorageService: StorageService {
                 countType: countType
         ) : nil
     }
+    
+    private func delete(entity: Entity, predicateFilter: String, value: Any) {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entity.rawValue)
+        fetchRequest.predicate = NSPredicate(format: predicateFilter, argumentArray: [value])
+        let managedContext = self.persistentContainer.viewContext
+        let object = (try? managedContext.fetch(fetchRequest))?.first
+        object.map(managedContext.delete)
         
+        try? managedContext.save()
+    }
+    
     private func delete(entity: Entity) -> Bool {
         let managedContext = self.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity.rawValue)
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         
-        return (try? managedContext.execute(deleteRequest)).map { _ in  true } ?? false
+        return (try? managedContext.execute(deleteRequest)).map { _ in
+            try? managedContext.save()
+            
+            return true
+        } ?? false
     }
     
     private func save<Model>(
@@ -92,15 +111,9 @@ class CoreDataStorageService: StorageService {
         
         let entityValue = NSEntityDescription.entity(forEntityName: entity.rawValue, in: managedContext)!
         let article = NSManagedObject(entity: entityValue, insertInto: managedContext)
-
-        
         article.setValuesForKeys(action(model))
         
-        do {
-            try managedContext.save()
-        } catch {
-            print("saving failed")
-        }
+        try? managedContext.save()
     }
     
     private func fetch(entityName: Entity) -> [NSManagedObject] {

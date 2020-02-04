@@ -32,7 +32,7 @@ class ArticleView<Model>: View<ArticleViewModel<Model>, ArticleViewModelConfigur
         self.tableView?.dataSource = self
     }
     
-    override func fill(viewModel: ArticleViewModel<Model>) {
+    override func fill(viewModel: ArticleViewModel<Model>, disposeBag: DisposeBag) {
         viewModel
             .model
             .bind {
@@ -42,7 +42,15 @@ class ArticleView<Model>: View<ArticleViewModel<Model>, ArticleViewModelConfigur
                     self.tableView?.reloadData()
                 }
             }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
+        
+        self.rx
+            .viewWillAppear
+            .map {
+                ArticleViewEvents.updateModel
+            }
+            .subscribe(viewModel.eventHandler)
+            .disposed(by: disposeBag)
         
         self.tableView?
             .rx
@@ -54,14 +62,14 @@ class ArticleView<Model>: View<ArticleViewModel<Model>, ArticleViewModelConfigur
                     .do {
                         viewModel.eventHandler.onNext(.showArticleDetailView($0))
                     }
-            }.disposed(by: self.disposeBag)
+            }.disposed(by: disposeBag)
         
-        self.configureRefresheControl(viewModel: viewModel)
+        self.configureRefresheControl(viewModel: viewModel, disposeBag: disposeBag)
         
         viewModel.eventHandler.onNext(.updateModel)
     }
     
-    func configureRefresheControl(viewModel: ArticleViewModel<Model>) {
+    func configureRefresheControl(viewModel: ArticleViewModel<Model>, disposeBag: DisposeBag) {
         let refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl
@@ -76,7 +84,7 @@ class ArticleView<Model>: View<ArticleViewModel<Model>, ArticleViewModelConfigur
                     refreshControl?.endRefreshing()
                 }
             }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
         self.tableView?.addSubview(refreshControl)
     }

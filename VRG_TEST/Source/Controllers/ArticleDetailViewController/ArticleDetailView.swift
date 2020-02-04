@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
 class ArticleDetailView: View<ArticleDetailViewModel, ArticleDetailViewModelConfigurator, ArticleDetailViewEvents> {
 
@@ -17,9 +19,9 @@ class ArticleDetailView: View<ArticleDetailViewModel, ArticleDetailViewModelConf
     @IBOutlet var abstractLabel: UILabel?
     @IBOutlet var keywordLabel: UILabel?
     
-    override func fill(viewModel: ArticleDetailViewModel) {
+    override func fill(viewModel: ArticleDetailViewModel, disposeBag: DisposeBag) {
         self.fill(model: viewModel.model)
-        self.configureNavigationBarItem(viewModel: viewModel)
+        self.configureNavigationBarItem(viewModel: viewModel, disposeBag: disposeBag)
     }
     
     private func fill(model: ArticleModelType) {
@@ -29,19 +31,35 @@ class ArticleDetailView: View<ArticleDetailViewModel, ArticleDetailViewModelConf
         self.publishedDateLabel?.text = model.publishedDate
         self.abstractLabel?.text = model.abstract
         self.keywordLabel?.text = model.adxKeywords
+        
+        print(model.id)
     }
     
-    private func configureNavigationBarItem(viewModel: ArticleDetailViewModel) {
-        let item = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: nil)
+    private func configureNavigationBarItem(viewModel: ArticleDetailViewModel, disposeBag: DisposeBag) {
+        let (event, item) = viewModel.model is DefaultArticleModel
+            ? (ArticleDetailViewEvents.deleteFromeFavorites, UIBarButtonItem.SystemItem.trash)
+            : (.addToFavorites, .save)
+        
+        self.addRightNavigationItem(viewModel: viewModel, with: event, type: item, disposeBag: disposeBag)
+    }
+    
+    private func addRightNavigationItem(
+        viewModel: ArticleDetailViewModel,
+        with event: ArticleDetailViewEvents,
+        type: UIBarButtonItem.SystemItem,
+        disposeBag: DisposeBag
+    ) {
+        
+        let item = UIBarButtonItem(barButtonSystemItem: type, target: self, action: nil)
         
         item
             .rx
             .tap
             .map {
-                ArticleDetailViewEvents.addToFavorites
+                event
             }
             .subscribe(viewModel.eventHandler)
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
         self.navigationItem.rightBarButtonItem = item
     }

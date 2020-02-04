@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FavoritesView" customModule="VRG_TEST" customModuleProvider="target">
+            <connections>
+                <outlet property="deleteAllFavoritesButton" destination="L5l-Qb-JNi" id="6V0-DN-nuy"/>
+                <outlet property="tableView" destination="T9v-fD-MsE" id="7f2-8O-sVy"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a4P-ui-sq7">
+                    <rect key="frame" x="0.0" y="44" width="414" height="50"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="Qda-bf-9bL"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L5l-Qb-JNi">
+                    <rect key="frame" x="0.0" y="44" width="414" height="50"/>
+                    <color key="backgroundColor" red="0.50045094130000001" green="0.83109029729999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="24"/>
+                    <state key="normal" title="Delete All">
+                        <color key="titleColor" red="1" green="0.0" blue="0.1634348793" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="T9v-fD-MsE">
+                    <rect key="frame" x="0.0" y="94" width="414" height="768"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="a4P-ui-sq7" firstAttribute="bottom" secondItem="T9v-fD-MsE" secondAttribute="top" id="47r-2N-fNw"/>
+                <constraint firstItem="L5l-Qb-JNi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="5Nd-U3-yBh"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="a4P-ui-sq7" secondAttribute="trailing" id="Ixp-2A-ypn"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="L5l-Qb-JNi" secondAttribute="trailing" id="Ln8-cX-yuv"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="T9v-fD-MsE" secondAttribute="trailing" id="MvD-9S-bCK"/>
+                <constraint firstItem="T9v-fD-MsE" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Y1S-gj-Kwi"/>
+                <constraint firstItem="T9v-fD-MsE" firstAttribute="top" secondItem="L5l-Qb-JNi" secondAttribute="bottom" id="aYj-Gs-skN"/>
+                <constraint firstItem="a4P-ui-sq7" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="cj1-hr-Pkx"/>
+                <constraint firstItem="L5l-Qb-JNi" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="fxE-re-rmC"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="T9v-fD-MsE" secondAttribute="bottom" id="g6Y-Nw-nbq"/>
+                <constraint firstItem="a4P-ui-sq7" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="jBQ-3C-3Lz"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+        </view>
+    </objects>
+</document>

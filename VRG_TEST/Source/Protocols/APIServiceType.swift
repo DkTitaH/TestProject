@@ -9,14 +9,6 @@
 import Alamofire
 import Foundation
 
-enum APIServiceError: Error {
-    
-    case networkError(Error)
-    case dataNotFound
-    case jsonParsingError
-    case invalidStatusCode(Int)
-}
-
 protocol APIServiceType {
     
     func getArticles<ArticlesModel: ArticlesModelType>(completion: @escaping (Result<ArticlesModel, APIServiceError>) -> ()

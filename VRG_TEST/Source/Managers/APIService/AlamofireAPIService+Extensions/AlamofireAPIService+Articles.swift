@@ -18,36 +18,12 @@ extension AlamofireAPIService {
         ) { result in
             switch result {
             case let .success(data):
-                if let model = try? self.decoder.decode(ArticlesModel.self, from: data) {
-                    completion(.success(model))
-                } else {
-                    completion(.failure(.jsonParsingError))
-                }
+                let (model, error): (ArticlesModel?, APIServiceError?) = self.parser.parse(data: data)
+                model.do { completion(.success($0)) }
+                error.do { completion(.failure($0)) }
             case let .failure(error):
                 completion(.failure(error))
             }
-        }
-    }
-}
-
-
-protocol JSONParserType {
-    func parse<ArticlesModel: ArticlesModelType>(data: Data) -> (ArticlesModel?, APIServiceError?)
-}
-
-class JSONParser: JSONParserType {
-    
-    private let decoder: JSONDecoder
-    
-    init(decoder: JSONDecoder) {
-        self.decoder = decoder
-    }
-    
-    func parse<ArticlesModel: ArticlesModelType>(data: Data) -> (ArticlesModel?, APIServiceError?) {
-        if let model = try? self.decoder.decode(ArticlesModel.self, from: data) {
-            return (model, nil)
-        } else {
-            return (nil, .jsonParsingError)
         }
     }
 }

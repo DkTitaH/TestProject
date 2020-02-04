@@ -12,7 +12,8 @@ import RxCocoa
 
 class FavoritesView: View<FavoritesViewModel, FavoritesViewModelConfigurator, FavoritesViewEvents>, UITableViewDataSource {
 
-    @IBOutlet var tableView: UITableView?
+    @IBOutlet var tableView: UITableView?    
+    @IBOutlet var deleteAllFavoritesButton: UIButton?
     
     private var model: [ArticleModelType]?
     
@@ -22,7 +23,7 @@ class FavoritesView: View<FavoritesViewModel, FavoritesViewModelConfigurator, Fa
         self.tableView?.dataSource = self
     }
     
-    override func fill(viewModel: FavoritesViewModel) {
+    override func fill(viewModel: FavoritesViewModel, disposeBag: DisposeBag) {
         viewModel
             .model
             .bind {
@@ -32,7 +33,24 @@ class FavoritesView: View<FavoritesViewModel, FavoritesViewModelConfigurator, Fa
                     self.tableView?.reloadData()
                 }
             }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
+        
+        self.deleteAllFavoritesButton?
+            .rx
+            .tap
+            .map {
+                FavoritesViewEvents.deleteAll
+            }
+            .subscribe(viewModel.eventHandler)
+            .disposed(by: disposeBag)
+        
+        self.rx
+            .viewWillAppear
+            .map {
+                FavoritesViewEvents.updateModel
+            }
+            .subscribe(viewModel.eventHandler)
+            .disposed(by: disposeBag)
         
         self.tableView?
             .rx
@@ -41,14 +59,14 @@ class FavoritesView: View<FavoritesViewModel, FavoritesViewModelConfigurator, Fa
                 self.model?[index.row]
             }.bind { model in
                 model.do { viewModel.eventHandler.onNext(.showArticleDetailView($0)) }
-            }.disposed(by: self.disposeBag)
+            }.disposed(by: disposeBag)
         
-        self.configureRefresheControl(viewModel: viewModel)
+        self.configureRefresheControl(viewModel: viewModel, disposeBag: disposeBag)
         
         viewModel.eventHandler.onNext(.updateModel)
     }
     
-    func configureRefresheControl(viewModel: FavoritesViewModel) {
+    func configureRefresheControl(viewModel: FavoritesViewModel, disposeBag: DisposeBag) {
         let refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl
@@ -63,7 +81,7 @@ class FavoritesView: View<FavoritesViewModel, FavoritesViewModelConfigurator, Fa
                     refreshControl?.endRefreshing()
                 }
             }
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
         self.tableView?.addSubview(refreshControl)
     }

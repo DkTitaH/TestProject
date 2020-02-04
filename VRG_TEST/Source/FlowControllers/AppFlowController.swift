@@ -114,8 +114,8 @@ class AppFlowController: FlowController<AppFlowControllerEvents> {
         
         viewModel
             .events
-            .bind { event in
-                self.handle(event:  event)
+            .bind { [weak self] event in
+                self?.handle(event:  event)
             }.disposed(by: self.disposeBag)
         
         return FavoritesView(viewModel: viewModel)
@@ -127,6 +127,8 @@ class AppFlowController: FlowController<AppFlowControllerEvents> {
             break
         case let .showArticleDetailView(model):
             self.showArticleDetailView(model: model)
+        case .deleteAll:
+            break
         }
     }
     
