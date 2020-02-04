@@ -10,6 +10,13 @@ import UIKit
 import RxCocoa
 import RxSwift
 
+
+fileprivate struct Constants {
+    
+    static let removedMessage = "Article was removed from favorites"
+    static let savedMessage = "Article was saved to favorites"
+}
+
 class ArticleDetailView: View<ArticleDetailViewModel, ArticleDetailViewModelConfigurator, ArticleDetailViewEvents> {
 
     @IBOutlet var sourceLabel: UILabel?
@@ -34,17 +41,26 @@ class ArticleDetailView: View<ArticleDetailViewModel, ArticleDetailViewModelConf
     }
     
     private func configureNavigationBarItem(viewModel: ArticleDetailViewModel, disposeBag: DisposeBag) {
-        let (event, item) = viewModel.model is DefaultArticleModel
-            ? (ArticleDetailViewEvents.deleteFromeFavorites, UIBarButtonItem.SystemItem.trash)
-            : (.addToFavorites, .save)
+        let (event, item, allertText) = viewModel.model is DefaultArticleModel
+            ? (
+                ArticleDetailViewEvents.deleteFromeFavorites,
+                UIBarButtonItem.SystemItem.trash,
+                Constants.removedMessage
+            )
+            : (
+                .addToFavorites,
+                .save,
+                Constants.savedMessage
+            )
         
-        self.addRightNavigationItem(viewModel: viewModel, with: event, type: item, disposeBag: disposeBag)
+        self.addRightNavigationItem(viewModel: viewModel, with: event, type: item, allertText: allertText, disposeBag: disposeBag)
     }
     
     private func addRightNavigationItem(
         viewModel: ArticleDetailViewModel,
         with event: ArticleDetailViewEvents,
         type: UIBarButtonItem.SystemItem,
+        allertText: String,
         disposeBag: DisposeBag
     ) {
         
@@ -53,12 +69,31 @@ class ArticleDetailView: View<ArticleDetailViewModel, ArticleDetailViewModelConf
         item
             .rx
             .tap
-            .map {
-                event
+            .observeOn(MainScheduler.asyncInstance)
+            .map { [weak self] in
+                self?.showAlertViewController(text: allertText)
+                
+                return event
             }
             .subscribe(viewModel.eventHandler)
             .disposed(by: disposeBag)
         
         self.navigationItem.rightBarButtonItem = item
+    }
+    
+    private func itemAction(text: String) {
+        self.showAlertViewController(text: text)
+    }
+    
+    private func showAlertViewController(text: String) { // need keep out to Flow controller
+        let allert = UIAlertController(title: "", message: text, preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Ok", style: .cancel) { _ in
+            self.navigationItem.rightBarButtonItem = nil
+        }
+        
+        allert.addAction(action)
+        
+        self.present(allert, animated: false)
     }
 }
