@@ -268,8 +268,8 @@
 		3F1DB58923E591C200B0A8A7 /* APIService */ = {
 			isa = PBXGroup;
 			children = (
-				3F1DB59323E5F1EF00B0A8A7 /* AlamofireAPIService+Extensions */,
 				3F1DB59123E5F12D00B0A8A7 /* AlamofireAPIService.swift */,
+				3F1DB59323E5F1EF00B0A8A7 /* AlamofireAPIService+Extensions */,
 				3F0631E723E8F3FD000097DD /* APIUrl.swift */,
 			);
 			path = APIService;

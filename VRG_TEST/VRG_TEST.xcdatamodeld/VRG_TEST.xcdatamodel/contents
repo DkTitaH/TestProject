@@ -16,6 +16,6 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Article" positionX="-63" positionY="-18" width="128" height="163"/>
+        <element name="Article" positionX="-63" positionY="-18" width="128" height="165"/>
     </elements>
 </model>

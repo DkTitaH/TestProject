@@ -23,10 +23,12 @@ class CoreDataStorageService: StorageService {
         case article = "Article"
     }
 
-    let persistentContainer: NSPersistentContainer
+    private let persistentContainer: NSPersistentContainer
+    private let managedContext: NSManagedObjectContext
     
     init(persistentContainer: NSPersistentContainer) {
         self.persistentContainer = persistentContainer
+        self.managedContext = persistentContainer.viewContext
     }
     
     func save(model: ArticleModelType) {
@@ -45,8 +47,7 @@ class CoreDataStorageService: StorageService {
     }
     
     func fetch() -> [ArticleModelType] {
-        return self.fetch(entityName: .article)
-            .compactMap(self.articleModel)
+        return  self.fetch(entityName: .article).compactMap(self.articleModel)
     }
     
     func deleteArticle(by id: Int) {
@@ -57,32 +58,25 @@ class CoreDataStorageService: StorageService {
         return self.delete(entity: .article)
     }
     
-    private func articleModel(from object: NSManagedObject) -> ArticleModelType? {
-        let abstract = object.value(forKey: "abstract") as? String ?? ""
-        let adxKeywords = object.value(forKey: "adxKeywords") as? String ?? ""
-        let count = object.value(forKey: "count") as? Int ?? 0
-        let countType = object.value(forKey: "countType") as? String ?? ""
-        let source = object.value(forKey: "source") as? String ?? ""
-        let publishedDate = object.value(forKey: "publishedDate") as? String ?? ""
-        let title = object.value(forKey: "title") as? String ?? ""
-        let id = object.value(forKey: "id") as? Int ?? 0
-        
-        return id != 0 ? DefaultArticleModel(
-                adxKeywords: adxKeywords,
-                abstract: abstract,
-                id: id,
-                count: count,
-                source: source,
-                title: title,
-                publishedDate: publishedDate,
-                countType: countType
+    private func articleModel(from article: Article) -> ArticleModelType? {
+        return article.id != 0 ? DefaultArticleModel(
+            adxKeywords: article.adxKeywords ?? "",
+            abstract: article.abstract ?? "",
+            id: Int(article.id),
+            count: Int(article.count),
+            source: article.source ?? "",
+            title: article.title ?? "",
+            publishedDate: article.publishedDate ?? "",
+            countType: article.countType ?? ""
         ) : nil
     }
     
     private func delete(entity: Entity, predicateFilter: String, value: Any) {
+        let managedContext = self.managedContext
+        
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entity.rawValue)
         fetchRequest.predicate = NSPredicate(format: predicateFilter, argumentArray: [value])
-        let managedContext = self.persistentContainer.viewContext
+        
         let object = (try? managedContext.fetch(fetchRequest))?.first
         object.map(managedContext.delete)
         
@@ -90,7 +84,7 @@ class CoreDataStorageService: StorageService {
     }
     
     private func delete(entity: Entity) -> Bool {
-        let managedContext = self.persistentContainer.viewContext
+        let managedContext = self.managedContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity.rawValue)
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         
@@ -106,7 +100,7 @@ class CoreDataStorageService: StorageService {
         model: Model,
         _ action: @escaping (Model) -> ([String: Any])
     ) {
-        let managedContext = self.persistentContainer.viewContext
+        let managedContext = self.managedContext
         managedContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         
         let entityValue = NSEntityDescription.entity(forEntityName: entity.rawValue, in: managedContext)!
@@ -116,9 +110,9 @@ class CoreDataStorageService: StorageService {
         try? managedContext.save()
     }
     
-    private func fetch(entityName: Entity) -> [NSManagedObject] {
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName.rawValue)
-        let managedContext = self.persistentContainer.viewContext
+    private func fetch(entityName: Entity) -> [Article] {
+        let managedContext = self.managedContext
+        let fetchRequest = NSFetchRequest<Article>(entityName: entityName.rawValue)            
         
         return (try? managedContext.fetch(fetchRequest)) ?? []
     }

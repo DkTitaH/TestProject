@@ -31,8 +31,6 @@ class ArticleDetailView: View<ArticleDetailViewModel, ArticleDetailViewModelConf
         self.publishedDateLabel?.text = model.publishedDate
         self.abstractLabel?.text = model.abstract
         self.keywordLabel?.text = model.adxKeywords
-        
-        print(model.id)
     }
     
     private func configureNavigationBarItem(viewModel: ArticleDetailViewModel, disposeBag: DisposeBag) {
