@@ -65,8 +65,6 @@ class ArticleView<Model>: View<ArticleViewModel<Model>, ArticleViewModelConfigur
             }.disposed(by: disposeBag)
         
         self.configureRefresheControl(viewModel: viewModel, disposeBag: disposeBag)
-        
-        viewModel.eventHandler.onNext(.updateModel)
     }
     
     func configureRefresheControl(viewModel: ArticleViewModel<Model>, disposeBag: DisposeBag) {

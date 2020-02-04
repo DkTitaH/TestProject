@@ -13,6 +13,6 @@ import RxCocoa
 extension Observable {
     
     func mapVoid() -> Observable<Void> {
-        return map { _ in Void() }
+        return self.map { _ in Void() }
     }
 }

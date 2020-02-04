@@ -11,8 +11,10 @@ import RxSwift
 import RxCocoa
 
 public extension Reactive where Base: UIViewController {
+    
     var viewWillAppear: ControlEvent<()> {
         let source = self.methodInvoked(#selector(Base.viewWillAppear)).mapVoid()
+        
         return ControlEvent(events: source)
     }
 }
